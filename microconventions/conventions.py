@@ -16,7 +16,7 @@ class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, 
         """ If not all arguments are supplied they will be grabbed from Microprediction.Org """
 
         self.base_url = base_url or api_url()
-        self.failover_base_url = base_url or api_url()
+        self.failover_base_url = failover_base_url or failover_api_url()
         if any( parameter is None for parameter in [num_predictions, min_len, min_balance]):
             config = get_config()
         self.num_predictions = num_predictions or config["num_predictions"]

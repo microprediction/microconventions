@@ -26,6 +26,7 @@ jobs:
         pip install pymorton
         pip install getjson
         pip install numpy 
+        pip install scipy
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}

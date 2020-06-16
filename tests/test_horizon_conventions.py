@@ -1,4 +1,5 @@
 from microconventions.horizon_conventions import HorizonConventions
+from microconventions import MicroConventions
 
 
 def test_horizon_names():
@@ -11,3 +12,6 @@ def test_horizon_names():
         assert a1 == a
         assert a2 == a
 
+def test_delays():
+    mc = MicroConventions()
+    assert len(mc.DELAYS)==3

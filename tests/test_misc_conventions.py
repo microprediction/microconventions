@@ -11,3 +11,11 @@ def test_misc():
     assert mc.SUBSCRIBERS=='subscribers::'
 
 
+
+def test_delays():
+    mc = MicroConventions()
+    assert len(mc.DELAYS)==3
+
+def test_delays():
+    mc = MicroConventions()
+    assert len(mc.DELAYS)==3

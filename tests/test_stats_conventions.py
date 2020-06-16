@@ -17,3 +17,11 @@ def test_mean_percentile():
     implied_avg = norminv(avg_p)
     actual_avg  = np.mean(zscores)
     assert abs(implied_avg-actual_avg)<1e-4
+
+
+def test_absc():
+    sc = StatsConventions()
+    xs = sc.percentile_abscissa()
+    assert len(xs)>5
+    xs = StatsConventions.percentile_abscissa()
+    assert len(xs) > 5

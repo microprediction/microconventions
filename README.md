@@ -1,6 +1,6 @@
 # microconventions
 
-This package codifies conventions adopted at www.MicroPrediction.Org ... whose new skin is coming soon ...
+This package codifies conventions adopted at www.MicroPrediction.Org, a kind of AI community garden offering turnkey short term forecasting and automated reuse of algorithms. 
 
 
 ![](https://i.imgur.com/yKItXmT.png)

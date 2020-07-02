@@ -58,7 +58,7 @@ The zcurve conventions also specify maps [0,1]^2 -> R and [0,1]^3->R that are us
 data streams. These are space filling curves arrived at by interleaving the digits in the binary representations. In the case of two dimensions this is similar to geohashing. These streams are
 denoted as follows: 
 
-   z2~bob~mary::3555.json 
+    z2~bob~mary::3555.json 
    
 refers to embeddings of z-scores from streams bob.json and mary.json. Here is a [video](https://www.swarmprediction.com/zcurves.html) that explains the embedding better than I can.
 

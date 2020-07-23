@@ -21,7 +21,7 @@ def test_stream_conventions():
 
 def test_horizon_conventions():
     mc = MicroConventions()
-    assert len(mc.DELAYS)==3
+    assert len(mc.DELAYS)==4
     assert all(isinstance(d,int) for d in mc.DELAYS)
     assert 'jeff' in mc.horizon_name(name='jeff.json',delay=70)
 

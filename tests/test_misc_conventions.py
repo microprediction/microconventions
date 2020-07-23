@@ -14,8 +14,8 @@ def test_misc():
 
 def test_delays():
     mc = MicroConventions()
-    assert len(mc.DELAYS)==3
+    assert len(mc.DELAYS)==4
 
 def test_delays():
     mc = MicroConventions()
-    assert len(mc.DELAYS)==3
+    assert len(mc.DELAYS)==4

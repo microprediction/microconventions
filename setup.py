@@ -24,7 +24,7 @@ setup(
     test_suite='pytest',
     tests_require=['pytest'],
     include_package_data=True,
-    install_requires=["muid>=0.4.6","getjson","pymorton","numpy","scipy"],
+    install_requires=["muid>=0.4.8","getjson","pymorton","numpy","scipy"],
     entry_points={
         "console_scripts": [
             "microconventions=microconventions.__main__:main",

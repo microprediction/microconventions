@@ -1,6 +1,6 @@
 # microconventions
 
-This package codifies conventions adopted at www.MicroPrediction.Org, a kind of AI community garden offering turnkey short term forecasting and automated reuse of algorithms. 
+This package codifies conventions adopted at www.MicroPrediction.Org, a kind of AI community garden of sorts. The site effects turnkey short term forecasting and automated reuse of algorithms. See also a series of articles at https://www.linkedin.com/in/petercotton/detail/recent-activity/posts/
 
 
 ![](https://i.imgur.com/yKItXmT.png)
@@ -14,7 +14,7 @@ Governs which names can be top level streams, as compared with derived streams i
 
     mystream.json
 
-There is a small chance the author regrets that particular decision (keeps open various possibilities) but it might pay dividends some day. 
+There is a small chance the author regrets the '.json' (though it keeps open various possibilities). 
 
 ## Key conventions ([code](https://github.com/microprediction/microconventions/blob/master/microconventions/key_conventions.py))
 

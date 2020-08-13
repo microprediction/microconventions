@@ -8,6 +8,7 @@ from microconventions.zcurve_conventions import ZCurveConventions
 from microconventions.misc_conventions import MiscConventions
 from microconventions.horizon_conventions import HorizonConventions
 from microconventions.url_conventions import api_url, failover_api_url, get_config
+import requests
 
                                                                                                                                         # KeyConventions must be listed last here
 class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, MiscConventions, ZCurveConventions, LeaderboardConventions, StatsConventions, KeyConventions):
@@ -27,7 +28,21 @@ class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, 
         _delays = delays or config['delays']
         super().__init__(delays=_delays)
 
-
+    def request_get_json(self, method, arg=None, data=None, throw=True):
+        """ Canonical way to call methods using requests library """
+        try:
+            if data is not None:
+                res = requests.get(self.base_url + '/' + method + '/' + arg, data=data)
+            elif arg is not None:
+                res = requests.get(self.base_url + '/' + method + '/' + arg)
+            elif data is None and arg is None:
+                res = requests.get(self.base_url + '/' + method)
+            if res.status_code == 200:
+                return res.json()
+        except ConnectionError as e:
+            print('WARNING: ConnectionError attempting to get ' + method)
+            if throw:
+                raise e
 
 
 

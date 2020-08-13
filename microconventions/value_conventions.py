@@ -1,6 +1,10 @@
 import json, sys
+import numpy as np
+from json.decoder import JSONDecodeError
+from deepdiff import DeepDiff
 
 # Conventions about published values
+
 
 class ValueConventions(object):
 
@@ -58,3 +62,19 @@ class ValueConventions(object):
         else:
             fields = {"value": value}
         return fields
+
+    @staticmethod
+    def has_nan(obj):
+        if isinstance(obj, (list,tuple)):
+            return any(map(ValueConventions.has_nan, obj))
+        elif isinstance(obj, dict):
+            return ValueConventions.has_nan(list(obj.values())) or ValueConventions.has_nan(list(obj.keys()))
+        else:
+            try:
+                return np.isnan(obj)
+            except (TypeError, JSONDecodeError):
+                return False
+
+    @staticmethod
+    def deep_equal(obj1, obj2):
+        return not DeepDiff(obj1, obj2, ignore_order=True)

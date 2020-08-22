@@ -1,5 +1,6 @@
 from microconventions.sep_conventions import SepConventions
 
+
 class MiscConventions(SepConventions):
 
     def __init__(self, **kwargs):

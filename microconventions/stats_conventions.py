@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class StatsConventions():
 
     # Statistics standard library introduced normal distribution but only in versions above 3.8

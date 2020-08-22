@@ -1,6 +1,7 @@
 import re, uuid
 from microconventions.misc_conventions import MiscConventions
 
+
 class StreamConventions(object):
     # Conventions for names of streams
 
@@ -23,4 +24,3 @@ class StreamConventions(object):
     @staticmethod
     def random_name():
         return str(uuid.uuid4()) + '.json'
-

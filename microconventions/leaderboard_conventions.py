@@ -1,9 +1,10 @@
 from microconventions.horizon_conventions import HorizonConventions
 from microconventions.sep_conventions import SepConventions
 
+
 class LeaderboardConventions(SepConventions):
 
-    def __init__(self,**kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.LEADERBOARD = "leaderboard" + self.SEP
         self.CUSTOM_LEADERBOARD = 'custom_leaderboard' + self.SEP
@@ -11,13 +12,13 @@ class LeaderboardConventions(SepConventions):
     def leaderboard_name(self, name=None, delay=None):
         """ Name for leaderboards by stream name and horizon """
         if name is None and delay is None:
-            return self.LEADERBOARD[:-2]+'.json'
+            return self.LEADERBOARD[:-2] + '.json'
         elif name is None:
-            return self.LEADERBOARD+str(delay)+'.json'
+            return self.LEADERBOARD + str(delay) + '.json'
         elif delay is None:
-            return self.LEADERBOARD+str(name)
+            return self.LEADERBOARD + str(name)
         else:
-            return self.LEADERBOARD+HorizonConventions.horizon_name(name=name,delay=delay)
+            return self.LEADERBOARD + HorizonConventions.horizon_name(name=name, delay=delay)
 
     def custom_leaderboard_name(self, sponsor, name=None, dt=None):
         """ Names for leaderboards with a given sponsor

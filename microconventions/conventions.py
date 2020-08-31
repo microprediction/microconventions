@@ -2,7 +2,8 @@ from getjson import getjson
 from microconventions.stats_conventions import StatsConventions
 from microconventions.key_conventions import KeyConventions
 from microconventions.stream_conventions import StreamConventions
-from microconventions.leaderboard_conventions import LeaderboardConventions
+from microconventions.leaderboard_conventions import LeaderboardConventions, LeaderboardVariety
+from microconventions.rating_conventions import RatingConventions, RatingVariety
 from microconventions.value_conventions import ValueConventions
 from microconventions.zcurve_conventions import ZCurveConventions
 from microconventions.misc_conventions import MiscConventions
@@ -13,7 +14,7 @@ import requests
 
 # KeyConventions must be listed last here
 class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, MiscConventions, ZCurveConventions,
-                       LeaderboardConventions, StatsConventions, KeyConventions):
+                       LeaderboardConventions, RatingConventions, StatsConventions, KeyConventions):
 
     def __init__(self, base_url=None, num_predictions=None, min_len=None, min_balance=None, delays=None,
                  failover_base_url=None):

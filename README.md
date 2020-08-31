@@ -6,6 +6,16 @@ This package codifies conventions adopted at www.MicroPrediction.Org, a kind of 
 ![](https://i.imgur.com/yKItXmT.png)
 
 
+
+## Dependencies  
+
+    conventions
+        |           
+   
+    species_conventions  horizon_conventions   misc_conventions
+           |               |                        |
+           --------  sep_conventions  ---------------           
+
 If you participate, it is worth a glance at this little library. It is intended to be readable code documenting some choices made. 
 
 ## Stream conventions ([code](https://github.com/microprediction/microconventions/blob/master/microconventions/stream_conventions.py))

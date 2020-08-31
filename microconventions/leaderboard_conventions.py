@@ -1,5 +1,27 @@
-from microconventions.horizon_conventions import HorizonConventions
 from microconventions.sep_conventions import SepConventions
+from enum import Enum
+from microconventions.type_conventions import Genus
+
+
+class LeaderboardVariety(Enum):
+    """ Enumerates varieties of leaderboards """
+    memory = 0
+    delay = 1
+    name = 2
+    sponsor = 3
+    genus = 4
+    name_and_delay = 21
+    sponsor_and_delay = 31
+    sponsor_and_genus = 34
+
+    def __str__(self):
+        return super().__str__().split('.')[1]
+
+    def split(self):
+        return self.__str__().split('_and_')
+
+    def instance_name(self, **kwargs):
+        return SepConventions.pipe().join( [ str(kwargs[k]) for k in self.split() ])
 
 
 class LeaderboardConventions(SepConventions):
@@ -7,42 +29,31 @@ class LeaderboardConventions(SepConventions):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.LEADERBOARD = "leaderboard" + self.SEP
-        self.CUSTOM_LEADERBOARD = 'custom_leaderboard' + self.SEP
+        self.CUSTOM_LEADERBOARD = 'custom_leaderboard' + self.SEP  # Deprecated
+        self.MEMORY = 10000   # Default memory used for most streams
+        self.MEMORIES = [1000,10000]
+        self.NUMERIC_ATTRIBUTES = ['delay','memory']
 
-    def leaderboard_name(self, name=None, delay=None):
-        """ Name for leaderboards by stream name and horizon """
-        if name is None and delay is None:
-            return self.LEADERBOARD[:-2] + '.json'
-        elif name is None:
-            return self.LEADERBOARD + str(delay) + '.json'
-        elif delay is None:
-            return self.LEADERBOARD + str(name)
-        else:
-            return self.LEADERBOARD + HorizonConventions.horizon_name(name=name, delay=delay)
+    def leaderboard_name(self, leaderboard_variety:LeaderboardVariety, **kwargs):
+        """ Name for leaderboards """
+        return self.LEADERBOARD + str(leaderboard_variety) + self.SEP + leaderboard_variety.instance_name(**kwargs)
 
-    def custom_leaderboard_name(self, sponsor, name=None, dt=None):
-        """ Names for leaderboards with a given sponsor
-        :param sponsor:  str
-        :param name:     str
-        :param dt:       datetime
-        :return:
-        """
+    def stream_leaderboard_names(self, name, sponsor, delay):
+        genus = Genus.from_name(name=name)
+        memory_boards = [ self.leaderboard_name(leaderboard_variety=LeaderboardVariety.memory,memory=memory) for memory in self.MEMORIES if not memory==self.MEMORY ]
+        stream_boards  = [ self.leaderboard_name(leaderboard_variety=variety, name=name, sponsor=sponsor, memory=self.MEMORY, delay=delay, genus=genus) for variety in LeaderboardVariety ]
+        return sorted(stream_boards + memory_boards)
 
-        def lb_cat(name=None):
-            if name is not None:
-                if 'z1~' in name:
-                    return 'zscores_univariate'
-                elif 'z2~' in name:
-                    return 'zcurves_bivariate'
-                elif 'z3~' in name:
-                    return 'zcurves_trivariate'
-                else:
-                    return 'regular'
-            else:
-                return 'all_streams'
+    def leaderboard_name_as_dict(self, leaderboard_name):
+        _, str_variety, str_values = leaderboard_name.split(SepConventions.sep())
+        things = str_variety.split(SepConventions.pipe())
+        values = str_variety.split(SepConventions.pipe())
+        d = dict(zip(things, values))
 
-        def lb_month(dt=None):
-            return dt.isoformat()[:7] if dt is not None else 'all_time'
+    def leaderboard_memory_from_name(self,leaderboard_name:str) -> int:
+        d = self.leaderboard_name_as_dict(leaderboard_name=leaderboard_name)
+        return int(d[str(LeaderboardVariety.memory)]) if str(LeaderboardVariety.memory) in d else self.MEMORY
 
-        return self.SEP.join(
-            [self.CUSTOM_LEADERBOARD[:-2], sponsor.replace(' ', '_'), lb_cat(name), lb_month(dt)]) + '.json'
+
+if __name__=='__main__':
+    print(LeaderboardConventions().stream_leaderboard_names(name='bill', sponsor='mary',delay=72))

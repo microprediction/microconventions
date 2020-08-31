@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class StatsConventions():
+class StatsConventions:
 
     # Statistics standard library introduced normal distribution but only in versions above 3.8
     # This adds a tiny amount of backward compatability but note that scipy is not a formal dependency so some users

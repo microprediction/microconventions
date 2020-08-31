@@ -12,5 +12,5 @@ def test_difficulty():
     kc = KeyConventions()
     assert kc.key_difficulty('not a key')==0
     s = kc.create_key(difficulty=6)
-    assert  kc.key_difficulty(s)==6
+    assert kc.key_difficulty(s)==6
 

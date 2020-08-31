@@ -47,8 +47,8 @@ class LeaderboardConventions(SepConventions):
     def leaderboard_name_as_dict(self, leaderboard_name):
         _, str_variety, str_values = leaderboard_name.split(SepConventions.sep())
         things = str_variety.split(SepConventions.pipe())
-        values = str_variety.split(SepConventions.pipe())
-        d = dict(zip(things, values))
+        values = str_values.split(SepConventions.pipe())
+        return dict(zip(things, values))
 
     def leaderboard_memory_from_name(self,leaderboard_name:str) -> int:
         d = self.leaderboard_name_as_dict(leaderboard_name=leaderboard_name)

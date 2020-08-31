@@ -2,9 +2,9 @@ from microconventions.leaderboard_conventions import LeaderboardConventions, Lea
 
 
 def test_leaderboard_names():
-    lb = LeaderboardConventions()
-    for variety in LeaderboardVariety:
-        print(variety)
-        print(lb.leaderboard_name(leaderboard_variety=variety, name='bill', sponsor='mary', memory=10000, delay=72,
-                                  host='home', genus='bivariate'))
+    lbc = LeaderboardConventions()
+    lbs = lbc.stream_leaderboard_names(name='bill', sponsor='mary', delay=72)
+    for lb in lbs:
+        memory = lbc.leaderboard_memory_from_name(lb)
+        print(memory)
 

@@ -24,7 +24,8 @@ class KeyConventions():
 
     @staticmethod
     def key_difficulty(key):
-        return len(muid.animal(key).replace(' ', ''))
+        nml = muid.animal(key)
+        return 0 if nml is None else len(nml.replace(' ',''))
 
     @staticmethod
     def shash(key):

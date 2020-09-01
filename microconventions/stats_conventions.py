@@ -220,7 +220,7 @@ class StatsConventions:
 nudged = StatsConventions.nudged
 is_discrete = StatsConventions.is_discrete
 evenly_spaced_percentiles = StatsConventions.evenly_spaced_percentiles
-cdf_abscissa = StatsConventions.cdf_values
+cdf_values = StatsConventions.cdf_values
 quantize = StatsConventions.quantize
 discrete_pdf = StatsConventions.discrete_pdf
 discrete_cdf = StatsConventions.discrete_cdf

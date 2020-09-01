@@ -79,7 +79,7 @@ class BudgetConventions(KeyConventions):
 
     def distance_to_bankruptcy(self, balance:float=None, level:float=None, write_key:str=None) -> float:
         """ Own distance to bankruptcy, or someone else's """
-        balance = balance or self._get_balance()
+        balance = balance or self._get_balance(write_key=write_key)
         level = level or self.bankruptcy_level(write_key=write_key)
         return balance - level
 

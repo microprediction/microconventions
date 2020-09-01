@@ -4,7 +4,7 @@ from pprint import pprint
 
 def test_constructor():
     mc = MicroConventions()
-    for mandatory in ['min_balance', 'min_len', 'DELAYS']:
+    for mandatory in ['min_balance', 'MIN_DIFFICULTIES', 'DELAYS']:
         assert mandatory in mc.__dict__
 
 

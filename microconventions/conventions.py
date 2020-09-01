@@ -8,13 +8,14 @@ from microconventions.value_conventions import ValueConventions
 from microconventions.zcurve_conventions import ZCurveConventions
 from microconventions.misc_conventions import MiscConventions
 from microconventions.horizon_conventions import HorizonConventions
+from microconventions.budget_conventions import BudgetConventions
 from microconventions.url_conventions import api_url, failover_api_url, get_config, connected_to_internet
 import requests
 
 
-# KeyConventions must be listed last here
+# BudgetConventions must be listed last here
 class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, MiscConventions, ZCurveConventions,
-                       LeaderboardConventions, RatingConventions, StatsConventions, KeyConventions):
+                       LeaderboardConventions, RatingConventions, StatsConventions, BudgetConventions):
 
     def __init__(self, base_url=None, num_predictions=None, min_len=None, min_balance=None, delays=None,
                  failover_base_url=None):
@@ -30,12 +31,12 @@ class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, 
                 else:
                     raise Exception('Could not initialize. Possibly due to slow internet. Maybe try again in a couple of moments.')
         self.num_predictions = num_predictions or config["num_predictions"]
-        self.min_len = min_len or config["min_len"]
-        self.min_balance = min_balance or config["min_balance"]
 
         # Pass arguments through to mixins
-        _delays = delays or config['delays']
-        super().__init__(delays=_delays)
+        delays = delays or config['delays']
+        min_len = min_len or config["min_len"]
+        min_balance = min_len or config["min_balance"]
+        super().__init__(delays=delays, min_difficulty=min_len, min_balance=min_balance)
 
     def request_get_json(self, method, arg=None, data=None, throw=True):
         """ Canonical way to call methods using requests library """
@@ -52,3 +53,4 @@ class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, 
             print('WARNING: ConnectionError attempting to get ' + method)
             if throw:
                 raise e
+

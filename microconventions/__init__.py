@@ -1,3 +1,7 @@
 from microconventions.url_conventions import API_URL, FAILOVER_API_URL, api_url, failover_api_url, get_config
-from microconventions.conventions import KeyConventions, StreamConventions, ValueConventions, MicroConventions, RatingVariety, LeaderboardVariety
-from microconventions.key_conventions import new_key, create_key, maybe_create_key, animal_from_key, shash, animal_from_code, key_difficulty
+from microconventions.conventions import KeyConventions, StreamConventions, ValueConventions, MicroConventions
+from microconventions.key_conventions import new_key, create_key, maybe_create_key, animal_from_key, shash,\
+    animal_from_code, key_difficulty, code_from_code_or_key
+from microconventions.type_conventions import Genus, Family
+from microconventions.rating_conventions import RatingVariety
+from microconventions.leaderboard_conventions import LeaderboardVariety

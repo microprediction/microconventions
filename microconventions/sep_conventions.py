@@ -1,11 +1,10 @@
-
 class SepConventions(object):
 
     # Separators used in names, external and internal
 
-    def __init__(self ,**kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.SEP   = SepConventions.sep()
+        self.SEP = SepConventions.sep()
         self.TILDE = SepConventions.tilde()
         self.PIPE = SepConventions.pipe()
 
@@ -20,4 +19,3 @@ class SepConventions(object):
     @staticmethod
     def pipe():
         return '|'
-

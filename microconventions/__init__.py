@@ -5,3 +5,5 @@ from microconventions.key_conventions import new_key, create_key, maybe_create_k
 from microconventions.type_conventions import Genus, Family, Activity
 from microconventions.rating_conventions import RatingVariety
 from microconventions.leaderboard_conventions import LeaderboardVariety
+from microconventions.stats_conventions import nudged, is_discrete, evenly_spaced_percentiles, cdf_abscissa,\
+    quantize, discrete_pdf, discrete_cdf, sign_changes, is_process

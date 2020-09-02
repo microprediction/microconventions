@@ -82,9 +82,8 @@ MEMO_STR_CAST = ['activity','genre']
 try:
     MemoType = namedtuple('MemoType',field_names=MEMO_FIELDS, defaults=MEMO_DEFAULTS)
 except TypeError:
-    # Prior to 3.7, urgh. Cross fingers.
+    # Prior to 3.7, we just proceed with no defaults.
     MemoType = namedtuple('MemoType', field_names=MEMO_FIELDS)
-    MemoType.__new__.__defaults__ = MEMO_DEFAULTS
 
 
 class Memo(MemoType):

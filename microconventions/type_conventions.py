@@ -2,6 +2,9 @@ from typing import List, Union, Any, Optional
 from enum import Enum
 from pprint import pprint
 import json
+from collections import namedtuple
+from copy import deepcopy
+from dataclasses import dataclass  # version 3.7 only
 
 KeyList = List[Optional[str]]
 NameList = List[Optional[str]]
@@ -72,37 +75,42 @@ class Family(StrEnum):
         return super().__str__().split('.')[1]
 
 
-class Memo:
+MEMO_FIELDS = ['activity','genre','success','execution','warned','message',
+               'write_key','sender','recipient','data']
+MEMO_DEFAULTS = [Activity.unknown, Genre.unknown, 1, -1, 0, None,
+                 None, None, None, None]
+MEMO_STR_CAST = ['activity','genre']
+MemoType = namedtuple('MemoType',field_names=MEMO_FIELDS, defaults=MEMO_DEFAULTS)
 
-    def __init__(self, activity:Activity=Activity.unknown,
-                 genre:Genre=Genre.unknown,
-                 success:int=1, warned:int=0, message:str='', data:dict=None, **kwargs):
-        self.activity = activity
-        self.genre = genre
-        self.success  = int(success)
-        self.warned   = int(warned)
-        self.message  = message
-        data = data or dict()
-        data.update(**kwargs)
-        self.data     = data
 
-    def to_dict(self):
-        d = {"activity":str(self.activity),
-            "genre":str(self.genre),
-            "success":self.success,
-            "message":self.message,
-            "warned":self.warned}
-        d.update(self.data)
+class Memo(MemoType):
+
+    def to_dict(self,cast_to_str=True, leave_out_none=True, flatten_data=True):
+        d = dict([ (k,v) for k,v in self._asdict().items() if v is not None ] ) if leave_out_none else self._asdict()
+        if cast_to_str:
+            for k in MEMO_STR_CAST:
+                if k in d:
+                    d[k] = str(d[k])
+        if flatten_data and d.get('data') is not None:
+            if isinstance(d.get('data'),dict):
+                data = deepcopy(d['data'])
+                d.update(data)
+                del(d['data'])
         return d
 
     def __str__(self):
         return json.dumps(self.to_dict())
+
+    def replace(self,**kwargs):
+        return self._replace(**kwargs)
 
 
 if __name__=="__main__":
     activity = Activity.submit
     print(activity)
 
-    message = Memo(activity=Activity.set, genre=Genre.lagged, message='all good')
+    message = Memo(activity=Activity.set, genre=Genre.lagged, message='all good',data={'care':7,'dog':13})
     pprint(message.to_dict())
-    pprint(str(message))
+    message = message.replace(success=1)
+    pprint(message.to_dict())
+

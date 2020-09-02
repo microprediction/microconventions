@@ -6,4 +6,4 @@ from microconventions.type_conventions import Genus, Family, Activity
 from microconventions.rating_conventions import RatingVariety
 from microconventions.leaderboard_conventions import LeaderboardVariety
 from microconventions.stats_conventions import nudged, is_discrete, evenly_spaced_percentiles, cdf_values,\
-    quantize, discrete_pdf, discrete_cdf, sign_changes, is_process
+    quantize, discrete_pdf, discrete_cdf, sign_changes, is_process, nudged

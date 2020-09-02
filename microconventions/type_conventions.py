@@ -1,9 +1,9 @@
-from typing import List, Union, Any, Optional
+from typing import List, Union, Optional
 from enum import Enum
 from pprint import pprint
-import json
-from collections import namedtuple
+from collections import OrderedDict
 from copy import deepcopy
+import time, datetime
 
 KeyList = List[Optional[str]]
 NameList = List[Optional[str]]
@@ -27,10 +27,11 @@ class Activity(StrEnum):
     set = 2
     mset = 3
     cset = 4
-    give = 5
-    receive = 6
-    touch = 7
-    mtouch = 8
+    put = 5
+    touch = 6
+    mtouch = 7
+    delete = 8
+    patch = 9
 
 
 class Genre(StrEnum):
@@ -74,38 +75,58 @@ class Family(StrEnum):
         return super().__str__().split('.')[1]
 
 
-MEMO_FIELDS = ['activity','genre','success','execution','warned','message',
-               'write_key','sender','recipient','data']
-MEMO_DEFAULTS = [Activity.unknown, Genre.unknown, 1, -1, 0, None,
-                 None, None, None, None]
-MEMO_STR_CAST = ['activity','genre']
-try:
-    MemoType = namedtuple('MemoType',field_names=MEMO_FIELDS, defaults=MEMO_DEFAULTS)
-except TypeError:
-    # Prior to 3.7, we just proceed with no defaults.
-    MemoType = namedtuple('MemoType', field_names=MEMO_FIELDS)
+class Memo(OrderedDict):
+    _STR_FIELDS = ['activity','genre']
 
+    def __init__(self, activity:Activity,
+                       genre:Genre,
+                       epoch:float=None,
+                       timestr:str=None,
+                       write_key:str=None,
+                       recipient:str=None,
+                       success:int=1,
+                       execution:int=-1,
+                       count:int=None,
+                       allowed:int=None,
+                       message:str=None,
+                       data:dict=None
+                       ):
+        self._initialized = False
+        super().__init__(activity=activity,genre=genre,epoch=epoch,timestr=timestr,write_key=write_key,
+                        recipient=recipient,success=success,execution=execution, count=count,allowed=allowed,
+                         message=message, data=data)
+        if self.get('epoch') is None:
+            self['epoch'] = time.time()
+        if self.get('timestr') is None:
+            self['timestr'] = str(datetime.datetime.now())
+        self._initialized = True
 
-class Memo(MemoType):
+    def __setitem__(self, key, value):
+        if self._initialized:
+            if key not in self.keys():
+                raise Exception(key+' is not a valid memo field')
+            else:
+                existing_value = self[key]
+                if existing_value is None or type(value)==type(existing_value):
+                    super().__setitem__(key,value)
+                else:
+                    raise Exception(key+' is supposed to be type '+str(type(existing_value)))
+        else:
+            super().__setitem__(key, value)
 
-    def to_dict(self,cast_to_str=True, leave_out_none=True, flatten_data=True):
-        d = dict([ (k,v) for k,v in self._asdict().items() if v is not None ] ) if leave_out_none else self._asdict()
+    def to_dict(self, cast_to_str=True, leave_out_none=True, flatten_data=True):
+        d = OrderedDict([(k, v) for k, v in dict(self).items() if v is not None]) if leave_out_none else OrderedDict(self)
         if cast_to_str:
-            for k in MEMO_STR_CAST:
+            for k in self._STR_FIELDS:
                 if k in d:
                     d[k] = str(d[k])
         if flatten_data and d.get('data') is not None:
-            if isinstance(d.get('data'),dict):
+            if isinstance(d.get('data'), dict):
                 data = deepcopy(d['data'])
-                d.update(data)
                 del(d['data'])
+                d.update(data)
+                return d
         return d
-
-    def __str__(self):
-        return json.dumps(self.to_dict())
-
-    def replace(self,**kwargs):
-        return self._replace(**kwargs)
 
 
 if __name__=="__main__":
@@ -113,7 +134,5 @@ if __name__=="__main__":
     print(activity)
 
     message = Memo(activity=Activity.set, genre=Genre.lagged, message='all good',data={'care':7,'dog':13})
+    message['success'] = 1
     pprint(message.to_dict())
-    message = message.replace(success=1)
-    pprint(message.to_dict())
-

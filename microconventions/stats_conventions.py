@@ -11,7 +11,7 @@ class StatsConventions:
 
     def __init__(self, num_predictions, **kwargs):
         super().__init__(**kwargs)
-        self.num_prediction = num_predictions
+        self.num_predictions = num_predictions
 
     @staticmethod
     def normcdf(x):

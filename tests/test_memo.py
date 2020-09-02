@@ -1,7 +1,14 @@
 from microconventions import Memo, Activity, Genre
+import sys
+
 
 def test_memo():
-    memo = Memo(activity=Activity.set,genre=Genre.repository, success=5, execution=1, data={'my_no':13})
+    if sys.version_info.major>=3 and sys.version_info.minor>=7:
+        memo = Memo(activity=Activity.set,genre=Genre.repository, success=5, execution=1, data={'my_no':13})
+    else:
+        # <3.7 we need to supply all arguments
+        memo = Memo(activity=Activity.set, genre=Genre.repository, success=5, execution=1, data={'my_no':13},
+                    warned=0, recipient='nobody',sender='nobody',write_key='asdf')
     d = memo.to_dict(flatten_data=True)
     assert 'my_no' in d
     assert 'data' not in d

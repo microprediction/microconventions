@@ -7,7 +7,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="microconventions",
-    version="0.5.0",
+    version="0.4.0",
     description="Conventions used at MicroPrediction.Org",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -19,12 +19,13 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     packages=["microconventions"],
     test_suite='pytest',
     tests_require=['pytest'],
     include_package_data=True,
-    install_requires=["muid>=0.5.0", "getjson", "pymorton", "numpy", "scipy", "requests", "deepdiff"],
+    install_requires=["muid>=0.5.0", "getjson", "pymorton", "numpy", "scipy", "requests", "deepdiff","schema","tdigest"],
     entry_points={
         "console_scripts": [
             "microconventions=microconventions.__main__:main",

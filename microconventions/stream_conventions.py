@@ -1,15 +1,12 @@
 import re, uuid
-from microconventions.misc_conventions import MiscConventions
+from microconventions.sep_conventions import SepConventions
 
-class StreamConventions(object):
+
+class StreamConventions(SepConventions):
     # Conventions for names of streams
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-    @staticmethod
-    def sep():
-        return '::'
 
     @staticmethod
     def is_plain_name(name: str):
@@ -23,4 +20,3 @@ class StreamConventions(object):
     @staticmethod
     def random_name():
         return str(uuid.uuid4()) + '.json'
-

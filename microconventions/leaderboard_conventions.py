@@ -54,7 +54,7 @@ class LeaderboardConventions(SepConventions):
         return sorted(list(set(stream_boards + memory_boards)))
 
     def leaderboard_name_as_dict(self, leaderboard_name):
-        """ leaderboard::name_and_delay::john.json|310  ->  {name:john.json,delay:310}"""
+        """ name_and_delay::john.json|310  ->  {name:john.json,delay:310}"""
         _, str_variety, str_values = leaderboard_name.split(SepConventions.sep())
         things = str_variety.split('_and_')
         values = str_values.split(SepConventions.pipe())

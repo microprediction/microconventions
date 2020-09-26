@@ -31,7 +31,7 @@ class Activity(StrEnum):
     mtouch = 8
 
 
-class Genre(StrEnum):
+class Resource(StrEnum):
     unknown = -1
     other = 0
     stream = 1
@@ -74,11 +74,11 @@ class Family(StrEnum):
 
 class Memo:
 
-    def __init__(self, activity:Activity=Activity.unknown,
-                 genre:Genre=Genre.unknown,
-                 success:int=1, warned:int=0, message:str='', data:dict=None, **kwargs):
+    def __init__(self,activity:Activity=Activity.unknown,
+                      resource:Resource=Resource.unknown,
+                      success:int=1, warned:int=0, message:str='', data:dict=None, **kwargs ):
         self.activity = activity
-        self.genre = genre
+        self.resource = resource
         self.success  = int(success)
         self.warned   = int(warned)
         self.message  = message
@@ -88,7 +88,7 @@ class Memo:
 
     def to_dict(self):
         d = {"activity":str(self.activity),
-            "genre":str(self.genre),
+            "resource":str(self.resource),
             "success":self.success,
             "message":self.message,
             "warned":self.warned}
@@ -103,6 +103,6 @@ if __name__=="__main__":
     activity = Activity.submit
     print(activity)
 
-    message = Memo(activity=Activity.set, genre=Genre.lagged, message='all good')
+    message = Memo(activity=Activity.set, resource=Resource.lagged, message='all good')
     pprint(message.to_dict())
     pprint(str(message))

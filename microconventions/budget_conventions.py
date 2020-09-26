@@ -12,7 +12,9 @@ class BudgetConventions(KeyConventions):
         self.MIN_DIFFICULTIES = {Activity.set:min_difficulty,
                                  Activity.mset:min_difficulty,
                                  Activity.submit: min_difficulty - 4,
-                                 Activity.cset: min_difficulty + 1}
+                                 Activity.cset: min_difficulty + 1,
+                                 Activity.give: min_difficulty-1,
+                                 Activity.receive: min_difficulty-2}
         super().__init__(**kwargs)
 
     def _write_key(self):

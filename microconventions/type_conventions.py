@@ -4,6 +4,7 @@ from pprint import pprint
 import json
 from collections import namedtuple
 from copy import deepcopy
+from dataclasses import dataclass  # version 3.7 only
 
 KeyList = List[Optional[str]]
 NameList = List[Optional[str]]

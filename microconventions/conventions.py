@@ -36,7 +36,7 @@ class MicroConventions(StreamConventions, HorizonConventions, ValueConventions, 
         delays = delays or config['delays']
         min_len = min_len or config["min_len"]
         min_balance = min_len or config["min_balance"]
-        super().__init__(num_predictions=num_predictions, delays=delays, min_difficulty=min_len, min_balance=min_balance)
+        super().__init__(num_predictions=num_predictions, delays=delays, min_len=min_len, min_balance=min_balance)
 
     def request_get_json(self, method, arg=None, data=None, throw=True):
         """ Canonical way to call methods using requests library """

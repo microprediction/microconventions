@@ -6,15 +6,15 @@ from microconventions.type_conventions import Activity
 
 class BudgetConventions(KeyConventions):
 
-    def __init__(self, min_difficulty, min_balance, **kwargs):
+    def __init__(self, min_len, min_balance, **kwargs):
         self.MIN_BALANCE = min_balance
         self.min_balance = min_balance  # Backward compat
-        self.MIN_DIFFICULTIES = {Activity.set:min_difficulty,
-                                 Activity.mset:min_difficulty,
-                                 Activity.submit: min_difficulty - 4,
-                                 Activity.cset: min_difficulty + 1,
-                                 Activity.give: min_difficulty-1,
-                                 Activity.receive: min_difficulty-2}
+        self.MIN_DIFFICULTIES = {Activity.set:min_len,
+                                 Activity.mset:min_len,
+                                 Activity.submit: min_len - 4,
+                                 Activity.cset: min_len + 1,
+                                 Activity.give: min_len - 1,
+                                 Activity.receive: min_len - 2}
         super().__init__(**kwargs)
 
     def _write_key(self):

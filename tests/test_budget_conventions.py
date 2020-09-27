@@ -3,7 +3,7 @@ from microconventions.type_conventions import Activity
 from microconventions.key_conventions import KeyConventions
 
 
-BUDGET_KWARGS = {'min_difficulty':10,'min_balance':-1}
+BUDGET_KWARGS = {'min_len':10,'min_balance':-1}
 
 
 class Kid(BudgetConventions):

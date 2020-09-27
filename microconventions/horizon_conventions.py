@@ -1,6 +1,7 @@
 from microconventions.type_conventions import List
 from microconventions.sep_conventions import SepConventions
 
+
 class HorizonConventions(SepConventions):
 
     def __init__(self,delays:List[int],**kwargs):

@@ -32,6 +32,7 @@ jobs:
         pip install getjson
         pip install numpy 
         pip install scipy
+        pip install tdigest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |

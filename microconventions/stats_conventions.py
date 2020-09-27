@@ -1,6 +1,6 @@
 import numpy as np
 import math
-
+from tdigest import TDigest
 
 class StatsConventions():
 

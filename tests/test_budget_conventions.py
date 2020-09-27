@@ -51,7 +51,7 @@ def test_difficulty():
     bc = BudgetConventions(**BUDGET_KWARGS)
     assert bc.key_difficulty('not a key')==0
     s = bc.create_key(difficulty=6)
-    assert bc.key_difficulty(s)==6
+    assert bc.key_difficulty(s)>=6
 
 
 

@@ -9,6 +9,7 @@ class BudgetConventions(KeyConventions):
     def __init__(self, min_len, min_balance, **kwargs):
         self.MIN_BALANCE = min_balance
         self.min_balance = min_balance  # Backward compat
+        self.min_len = min_len
         self.MIN_DIFFICULTIES = {Activity.set:min_len,
                                  Activity.mset:min_len,
                                  Activity.submit: min_len - 4,

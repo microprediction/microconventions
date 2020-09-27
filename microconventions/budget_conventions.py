@@ -1,5 +1,4 @@
 from microconventions.key_conventions import KeyConventions
-from microconventions.type_conventions import Activity
 
 # Conventions regarding stream budgets and bankruptcy
 
@@ -10,12 +9,6 @@ class BudgetConventions(KeyConventions):
         self.MIN_BALANCE = min_balance
         self.min_balance = min_balance  # Backward compat
         self.min_len = min_len
-        self.MIN_DIFFICULTIES = {Activity.set:min_len,
-                                 Activity.mset:min_len,
-                                 Activity.submit: min_len - 4,
-                                 Activity.cset: min_len + 1,
-                                 Activity.give: min_len - 1,
-                                 Activity.receive: min_len - 2}
         super().__init__(**kwargs)
 
     def _write_key(self):
@@ -32,35 +25,6 @@ class BudgetConventions(KeyConventions):
             return self.get_balance(write_key=write_key)
         except AttributeError:
             raise Exception('Supply write_key')
-
-    def permitted(self, activity:Activity, difficulty:int=None, write_key=None) ->bool:
-        """ Determine ability to do stuff, or someone else's """
-        difficulty = difficulty or self.difficulty(write_key=write_key)
-        return difficulty >= self.MIN_DIFFICULTIES[activity]
-
-    def permitted_to_set(self, difficulty:int=None, write_key=None):
-        """ Determine whether you or someone else has permission to create stream """
-        return self.permitted(activity=Activity.set, difficulty=difficulty, write_key=write_key)
-
-    def permitted_to_submit(self, difficulty: int = None, write_key=None):
-        """ Determine whether you or someone else has permission to create (update) stream """
-        return self.permitted(activity=Activity.submit, difficulty=difficulty, write_key=write_key)
-
-    def permitted_to_mset(self, difficulty: int = None, write_key=None):
-        """ Determine whether you or someone else has permission to create (update) multiple streams  """
-        return self.permitted(activity=Activity.mset, difficulty=difficulty, write_key=write_key)
-
-    def permitted_to_cset(self, difficulty: int = None, write_key=None):
-        """ Determine whether you or someone else has permission to create (update) multiple streams with implied Copulas  """
-        return self.permitted(activity=Activity.mset, difficulty=difficulty, write_key=write_key)
-
-    def permitted_to_give(self, difficulty: int = None, write_key=None ):
-        """ Determine whether you or someone else has permission to transfer some of your balance """
-        return self.permitted(activity=Activity.give, difficulty=difficulty, write_key=write_key)
-
-    def permitted_to_receive(self, difficulty: int=None, write_key=None):
-        """ Determine whether you or someone else has permission to receive some balance """
-        return self.permitted(activity=Activity.receive, difficulty=difficulty, write_key=write_key)
 
     def bankruptcy_level(self, difficulty:int=None, write_key:str=None):
         difficulty = difficulty or self.difficulty(write_key=write_key)
@@ -84,8 +48,3 @@ class BudgetConventions(KeyConventions):
         level = level or self.bankruptcy_level(write_key=write_key)
         return balance - level
 
-    def maximum_stream_budget(self, difficulty:int=None, write_key:str=None) -> float:
-        """ Default, and also maximum budget for yourself or someone else """
-        difficulty = difficulty or self.difficulty(write_key=write_key)
-        budget_1_difficulty = self.MIN_DIFFICULTIES[Activity.mset]
-        return abs(self.bankruptcy_level(difficulty=difficulty) / self.bankruptcy_level(difficulty=budget_1_difficulty))

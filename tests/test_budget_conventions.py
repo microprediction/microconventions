@@ -1,5 +1,4 @@
 from microconventions.budget_conventions import BudgetConventions
-from microconventions.type_conventions import Activity
 from microconventions.key_conventions import KeyConventions
 
 
@@ -26,17 +25,13 @@ def test_kid():
     kid = Kid()
     assert kid.difficulty() >= 8
     assert kid.difficulty(write_key=kid.write_key) >= 8
-    assert not kid.permitted_to_cset()
-    assert not kid.permitted_to_mset()
-    assert not kid.permitted_to_set()
-    assert kid.permitted_to_submit()
     assert kid.bankruptcy_level()<0
     assert kid.bankruptcy_level(difficulty=8) < 0
     assert kid.bankruptcy_level(difficulty=12) < -10
     assert kid.bankruptcy_level(write_key=kid.write_key) <0
     assert kid.distance_to_bankruptcy(balance=-1, level=-10) > 0
     assert kid.distance_to_bankruptcy(balance=10) > 10
-    assert kid.maximum_stream_budget()<0.1
+
 
 
 def test_bigkid():

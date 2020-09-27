@@ -1,22 +1,36 @@
-from microconventions.leaderboard_conventions import LeaderboardConventions, LeaderboardVariety
+from microconventions.leaderboard_conventions import LeaderboardConventions
+import datetime
+
+# Looking for leaderboards?
+
+def test_custom_leaderboard_names():
+    rc = LeaderboardConventions()
+    questions = [ {'name':'z1~cop.json','sponsor':'big bird'},
+                  {'name': 'z1~cop.json', 'sponsor': 'big bird','dt':datetime.date(2019, 4, 13)},
+                  {'sponsor': 'big bird'},
+                  {'sponsor': 'big bird', 'dt': datetime.date(2019, 4, 13)}
+                  ]
+    answers   = [ rc.CUSTOM_LEADERBOARD + 'big_bird::zscores_univariate::all_time.json',
+                  rc.CUSTOM_LEADERBOARD + 'big_bird::zscores_univariate::2019-04.json',
+                  rc.CUSTOM_LEADERBOARD + 'big_bird::all_streams::all_time.json',
+                  rc.CUSTOM_LEADERBOARD + 'big_bird::all_streams::2019-04.json',
+                  ]
+
+    for q,a in zip(questions,answers):
+        a1 = rc.custom_leaderboard_name(**q)
+        assert a1==a
 
 
-def test_leaderboard_names():
-    lbc = LeaderboardConventions()
-    lbs = lbc.leaderboard_names_to_update(name='bill', sponsor='mary', delay=72)
-    for lb in lbs:
-        memory = lbc.leaderboard_memory_from_name(lb)
-        print(memory)
-
-def test_this():
-    lbc = LeaderboardConventions()
-    lb_names = lbc.leaderboard_names_to_update(name='bill', sponsor='mary', delay=72)
-    lb_dicts = [lbc.leaderboard_name_as_dict(name) for name in lb_names]
-
-    expected = [{'delay': 72}, {'genus': 'regular'}] + [{'memory': memory} for memory in lbc.LEADERBOARD_MEMORIES] + [{'name': 'bill'},
-                                                                                                                      {'delay': 72, 'name': 'bill'},
-                                                                                                                      {'sponsor': 'mary'},
-                                                                                                                      {'delay': 72, 'sponsor': 'mary'},
-                                                                                                                      {'genus': 'regular', 'sponsor': 'mary'}]
-    for lbd, expected_lbd in zip(lb_dicts,expected):
-        assert lbd==expected_lbd or 'memory' in lbd
+def test_regular_leaderboard():
+    rc = LeaderboardConventions()
+    questions = [{'name': 'z1~cop.json'},
+                 {'name': 'z1~cop.json', 'delay': 70},
+                 {'delay': 310}
+                 ]
+    answers = [rc.LEADERBOARD + 'z1~cop.json',
+               rc.LEADERBOARD + '70::z1~cop.json',
+               rc.LEADERBOARD + '310.json'
+               ]
+    for q, a in zip(questions, answers):
+        a1 = rc.leaderboard_name(**q)
+        assert a1 == a

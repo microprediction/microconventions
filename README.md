@@ -6,13 +6,18 @@ This package codifies conventions adopted at www.MicroPrediction.Org, a kind of 
 ![](https://i.imgur.com/yKItXmT.png)
 
 
+## Tutorials
+
+New video tutorials are available at https://www.microprediction.com/python-1 to help you
+get started running crawlers at www.microprediction.com
+
 
 ## Dependencies  
 
     conventions
         |           
    
-    species_conventions  horizon_conventions   misc_conventions
+    <species_conventions>  horizon_conventions   misc_conventions
            |               |                        |
            --------  sep_conventions  ---------------           
 

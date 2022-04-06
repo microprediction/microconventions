@@ -3,6 +3,7 @@
 This package codifies conventions adopted at www.MicroPrediction.Org, a kind of AI community garden of sorts. The site effects turnkey short term forecasting and automated reuse of algorithms. See also a series of articles at https://www.linkedin.com/in/petercotton/detail/recent-activity/posts/
 
 
+
 ![](https://i.imgur.com/yKItXmT.png)
 
 

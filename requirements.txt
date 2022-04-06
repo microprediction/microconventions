@@ -1,0 +1,8 @@
+muid>=0.5.3
+getjson>=2.0.0
+pymorton
+tdigest
+numpy
+scipy
+deepdiff
+schema
